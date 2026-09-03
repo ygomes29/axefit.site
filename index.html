@@ -22,6 +22,7 @@
     html {
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -282,6 +283,90 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
 
+    /* Mobile hamburger toggle (hidden on desktop) */
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 110;
+    }
+
+    .navbar-toggle span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--asha-black);
+      border-radius: 2px;
+      transition: all var(--transition-base);
+      transform-origin: center;
+    }
+
+    .navbar-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .navbar-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .navbar-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Mobile dropdown menu (hidden on desktop) */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--asha-yellow);
+      padding: 12px 20px 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-base), padding var(--transition-base);
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      max-height: 420px;
+      padding: 12px 20px 20px;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--asha-black);
+      padding: 14px 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-menu a:last-of-type {
+      border-bottom: none;
+    }
+
+    .mobile-menu .mobile-menu-cta {
+      margin-top: 10px;
+      background: var(--asha-black);
+      color: #FFFFFF;
+      justify-content: center;
+      border-radius: var(--radius-pill);
+      padding: 14px 20px;
+      border-bottom: none;
+    }
+
     /* ============================================
        SECTION 1 — HERO
     ============================================ */
@@ -422,11 +507,12 @@
     .section-title {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.75rem, 4vw, 3rem);
       line-height: 1.15;
       letter-spacing: -0.01em;
       margin-bottom: 20px;
       text-transform: uppercase;
+      overflow-wrap: break-word;
     }
 
     .section-subtitle {
@@ -668,6 +754,7 @@
     .plan-section {
       padding: 100px 0;
       position: relative;
+      overflow: hidden;
     }
 
     .plan-section::before {
@@ -1140,6 +1227,10 @@
       align-items: center;
     }
 
+    .schedule-wrapper > * {
+      min-width: 0;
+    }
+
     .schedule-header {
       margin-bottom: 32px;
     }
@@ -1307,6 +1398,14 @@
         display: none;
       }
 
+      .navbar-cta {
+        display: none;
+      }
+
+      .navbar-toggle {
+        display: flex;
+      }
+
       .benefits-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1348,6 +1447,10 @@
     @media (max-width: 768px) {
       .container {
         padding: 0 20px;
+      }
+
+      .btn {
+        white-space: normal;
       }
 
       .navbar {
@@ -1464,6 +1567,14 @@
 
       .schedule-item {
         padding: 14px 18px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+
+      .schedule-time-value {
+        font-size: 1.1rem;
+        align-self: flex-end;
       }
 
       .schedule-day-name {
@@ -1552,6 +1663,19 @@
           QUERO TREINAR
         </a>
       </div>
+      <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a href="#beneficios">Diferenciais</a>
+      <a href="#plano">Plano Club+</a>
+      <a href="#aulas">Aulas Coletivas</a>
+      <a href="#experiencia">Estrutura</a>
+      <a href="#horarios">Horários</a>
+      <a href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20treinar%20na%20AX%C3%89%20FIT" class="btn btn-primary mobile-menu-cta">QUERO TREINAR</a>
     </div>
   </nav>
 
@@ -2124,6 +2248,47 @@
     }
 
     window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+
+    // Mobile menu toggle
+    const navbarToggle = document.getElementById('navbarToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function closeMobileMenu() {
+      navbarToggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      navbarToggle.setAttribute('aria-expanded', 'false');
+      navbarToggle.setAttribute('aria-label', 'Abrir menu');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+
+    function openMobileMenu() {
+      navbarToggle.classList.add('open');
+      mobileMenu.classList.add('open');
+      navbarToggle.setAttribute('aria-expanded', 'true');
+      navbarToggle.setAttribute('aria-label', 'Fechar menu');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+    }
+
+    navbarToggle.addEventListener('click', () => {
+      const isOpen = navbarToggle.classList.contains('open');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Close mobile menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close mobile menu on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) {
+        closeMobileMenu();
+      }
+    });
 
     // Intersection Observer for reveal animations
     const revealElements = document.querySelectorAll('.reveal');
