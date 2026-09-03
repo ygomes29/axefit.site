@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXÉ FIT | Academia e Treino</title>
+  <meta name="description" content="AXÉ FIT — Academia com energia, estrutura e comunidade para você evoluir. Treino de verdade com resultados de verdade. Venha conhecer.">
+  <meta name="theme-color" content="#0D0D0D">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0D0D0D;
+      color: #FFFFFF;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      /* ——— Identidade AXÉ FIT ——— */
+      --asha-yellow: #FECC02;
+      --asha-black: #000000;
+
+      /* ——— Paleta derivada ——— */
+      --color-bg: var(--asha-black);
+      --color-bg-elevated: #0A0A0A;
+      --color-bg-card: #141414;
+      --color-accent: var(--asha-yellow);
+      --color-accent-hover: #FFD633;
+      --color-accent-glow: rgba(254, 204, 2, 0.25);
+      --color-text: #FFFFFF;
+      --color-text-muted: #A0A0A0;
+      --color-text-subtle: #666666;
+      --color-border: rgba(254, 204, 2, 0.08);
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 50px;
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px var(--color-accent-glow);
+      --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      --max-width: 1200px;
+    }
+
+    /* ============================================
+       UTILITIES
+    ============================================ */
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px var(--color-accent-glow); }
+      50% { box-shadow: 0 0 40px var(--color-accent-glow), 0 0 60px rgba(238, 178, 0, 0.1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity var(--transition-slow), transform var(--transition-slow);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Offset for fixed navbar on anchor scroll */
+    section[id] {
+      scroll-margin-top: 80px;
+    }
+
+    /* ============================================
+       BUTTONS
+    ============================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 18px 40px;
+      border: none;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: var(--asha-black);
+      font-weight: 800;
+      box-shadow: 0 4px 20px var(--color-accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--color-accent-glow);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--asha-yellow);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      padding: 10px 0;
+      transition: all var(--transition-base);
+    }
+
+    .navbar.scrolled {
+      background: var(--asha-yellow);
+      padding: 8px 0;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .navbar-links a {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--asha-black);
+      transition: opacity var(--transition-base), transform var(--transition-base);
+    }
+
+    .navbar-links a:hover {
+      opacity: 0.7;
+      transform: translateY(-1px);
+    }
+
+    .navbar-cta .btn {
+      background: var(--asha-black);
+      color: #FFFFFF;
+      padding: 12px 28px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .navbar-cta .btn:hover {
+      background: #1C1C1C;
+      color: var(--asha-yellow);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ============================================
+       SECTION 1 — HERO
+    ============================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: 70px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.35) contrast(1.15) saturate(0.9);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(13, 13, 13, 0.85) 0%,
+        rgba(13, 13, 13, 0.5) 40%,
+        rgba(13, 13, 13, 0.3) 60%,
+        rgba(13, 13, 13, 0.7) 100%
+      );
+    }
+
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to top, var(--color-bg), transparent);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 .accent {
+      color: var(--color-accent);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+      animation: fadeIn 1s 1.5s forwards;
+    }
+
+    .hero-scroll-indicator span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: var(--font-heading);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--color-text), transparent);
+      animation: fadeIn 1s ease infinite alternate;
+    }
+
+    /* ============================================
+       SECTION 2 — POR QUE AXÉ FIT
+    ============================================ */
+    .benefits {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .benefits-header {
+      margin-bottom: 64px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .benefit-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 28px;
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(238, 178, 0, 0.15);
+      box-shadow: var(--shadow-card);
+    }
+
+    .benefit-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .benefit-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(238, 178, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.4rem;
+    }
+
+    .benefit-card h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .benefit-card p {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ============================================
+       SECTION 3 — EXPERIÊNCIA AXÉ FIT
+    ============================================ */
+    .experience {
+      padding: 80px 0 120px;
+      position: relative;
+    }
+
+    .experience-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .experience-content {
+      padding-right: 20px;
+    }
+
+    .experience-content .section-title {
+      margin-bottom: 24px;
+    }
+
+    .experience-content p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    .experience-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item:first-child {
+      grid-row: 1 / 3;
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(13, 13, 13, 0.4));
+      pointer-events: none;
+    }
+
+    /* ============================================
+       SECTION 4 — CTA FINAL + FOOTER
+    ============================================ */
+    .cta-final {
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-final::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(238, 178, 0, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-final .section-title {
+      margin-bottom: 20px;
+    }
+
+    .cta-final p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      max-width: 480px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+    }
+
+    .cta-final-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--color-accent);
+      margin: 0 auto 44px;
+      border-radius: 2px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--color-border);
+      padding: 40px 0;
+    }
+
+    .footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-brand img {
+      height: 38px;
+      width: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--color-text-subtle);
+      font-weight: 300;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      transition: color var(--transition-base);
+    }
+
+    .footer-links a:hover {
+      color: var(--color-accent);
+    }
+
+    /* ============================================
+       SECTION: PLANO AXÉ CLUB+
+    ============================================ */
+    .plan-section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .plan-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(254, 204, 2, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .plan-card-container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #111111;
+      border: 1.5px solid rgba(254, 204, 2, 0.28);
+      border-radius: 28px;
+      padding: 48px 44px;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 32px rgba(254, 204, 2, 0.09);
+      text-align: center;
+    }
+
+    .plan-badge-pill {
+      display: inline-block;
+      border: 1.5px solid var(--asha-yellow);
+      padding: 7px 22px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 22px;
+      background: rgba(254, 204, 2, 0.06);
+    }
+
+    .plan-badge-pill span {
+      color: var(--asha-yellow);
+    }
+
+    .plan-headline {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .plan-headline .yellow-text {
+      color: var(--asha-yellow);
+      display: block;
+    }
+
+    .plan-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--asha-yellow);
+      margin: 0 auto 32px;
+      border-radius: 2px;
+    }
+
+    .plan-pricing-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1.3fr;
+      align-items: center;
+      gap: 24px;
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .plan-price-initial {
+      text-align: center;
+    }
+
+    .plan-step-title {
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .plan-step-title .ordinal {
+      color: var(--asha-yellow);
+      font-size: 1.25rem;
+    }
+
+    .plan-price-sublabel {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 8px;
+    }
+
+    .plan-price-value-initial {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .plan-price-value-initial small {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .plan-price-arrow {
+      color: var(--asha-yellow);
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .plan-price-recurring {
+      padding-left: 8px;
+    }
+
+    .plan-discount-tag {
+      display: inline-block;
+      background: var(--asha-yellow);
+      color: var(--asha-black);
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .plan-discount-sub {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #DDDDDD;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .plan-discount-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .plan-price-big {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      color: var(--asha-yellow);
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .plan-price-big small {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .plan-features-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 22px;
+    }
+
+    .plan-features-bar span.bullet {
+      color: var(--asha-yellow);
+    }
+
+    .plan-no-fee {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.88rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 26px;
+    }
+
+    .plan-no-fee svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--asha-yellow);
+      fill: none;
+    }
+
+    .btn-plan-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 480px;
+      background: var(--asha-yellow);
+      color: var(--asha-black);
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 18px 30px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 6px 25px rgba(254, 204, 2, 0.35);
+      transition: all var(--transition-base);
+    }
+
+    .btn-plan-cta:hover {
+      background: #FFD633;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(254, 204, 2, 0.5);
+    }
+
+    .btn-plan-cta svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+    }
+
+    .plan-disclaimer {
+      font-size: 0.75rem;
+      color: var(--color-text-subtle);
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       SECTION: AULAS COLETIVAS (Bespoke Cards)
+    ============================================ */
+    .classes-section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .classes-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 50px;
+    }
+
+    .classes-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .modality-card {
+      background: #141414;
+      border: 1.5px solid rgba(254, 204, 2, 0.15);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-base);
+    }
+
+    .modality-card:hover {
+      border-color: var(--asha-yellow);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(254, 204, 2, 0.12);
+    }
+
+    .modality-card-media {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .modality-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .modality-card:hover .modality-card-media img {
+      transform: scale(1.08);
+    }
+
+    .modality-card-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #141414 5%, transparent 60%);
+    }
+
+    .modality-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--asha-yellow);
+      color: var(--asha-yellow);
+      font-family: var(--font-heading);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    .modality-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .modality-card-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .modality-card-desc {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .modality-schedule-box {
+      background: #1C1C1C;
+      border: 1px solid rgba(254, 204, 2, 0.12);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .modality-schedule-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--asha-yellow);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modality-schedule-label svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--asha-yellow);
+      fill: none;
+    }
+
+    .modality-schedule-item {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modality-schedule-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .modality-schedule-item span.period {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .modality-included-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--asha-yellow);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .classes-weekly-summary {
+      background: #141414;
+      border: 1px solid rgba(254, 204, 2, 0.2);
+      border-radius: 16px;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .classes-summary-text h4 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .classes-summary-text p {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+    }
+
+    .classes-summary-cta .btn {
+      padding: 12px 28px;
+      font-size: 0.8rem;
+    }
+
+    /* ============================================
+       SECTION: HORÁRIO DE FUNCIONAMENTO (Bespoke Dashboard)
+    ============================================ */
+    .schedule-section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .schedule-wrapper {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .schedule-header {
+      margin-bottom: 32px;
+    }
+
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #141414;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 18px 24px;
+      transition: all var(--transition-base);
+    }
+
+    .schedule-item:hover {
+      border-color: rgba(254, 204, 2, 0.3);
+      transform: translateX(4px);
+    }
+
+    .schedule-day-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .schedule-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--asha-yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .schedule-icon-circle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--asha-yellow);
+      fill: none;
+    }
+
+    .schedule-day-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.98rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+    }
+
+    .schedule-time-value {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      color: var(--asha-yellow);
+    }
+
+    .schedule-highlight-banner {
+      margin-top: 8px;
+      background: rgba(254, 204, 2, 0.06);
+      border: 1.5px solid var(--asha-yellow);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--asha-yellow);
+      box-shadow: 0 0 25px rgba(254, 204, 2, 0.12);
+    }
+
+    .schedule-highlight-banner svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--asha-yellow);
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .schedule-facility-card {
+      position: relative;
+      background: #141414;
+      border: 1px solid rgba(254, 204, 2, 0.2);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .schedule-facility-img {
+      position: relative;
+      height: 240px;
+    }
+
+    .schedule-facility-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .schedule-facility-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #141414 10%, transparent 80%);
+    }
+
+    .schedule-facility-content {
+      padding: 28px 30px;
+    }
+
+    .schedule-facility-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+
+    .schedule-facility-points {
+      list-style: none;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .schedule-facility-points li {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .schedule-facility-points li svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--asha-yellow);
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       RESPONSIVE — TABLET
+    ============================================ */
+    @media (max-width: 1024px) {
+      .navbar-links {
+        display: none;
+      }
+
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .classes-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .schedule-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .experience-wrapper {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .experience-content {
+        padding-right: 0;
+        text-align: center;
+      }
+
+      .experience-content .section-subtitle,
+      .experience-content p {
+        max-width: 100%;
+      }
+
+      .experience-gallery {
+        grid-template-rows: 200px 200px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE — MOBILE
+    ============================================ */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      .navbar {
+        padding: 8px 0;
+      }
+
+      .navbar-brand img {
+        height: 38px;
+      }
+
+      .navbar-cta {
+        display: block;
+      }
+
+      .navbar-cta .btn {
+        padding: 8px 18px;
+        font-size: 0.72rem;
+      }
+
+      .hero {
+        min-height: 100svh;
+        align-items: flex-end;
+        padding-bottom: 80px;
+        padding-top: 75px;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 10vw, 3.2rem);
+      }
+
+      .hero-subtitle {
+        font-size: 0.95rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .hero-scroll-indicator {
+        display: none;
+      }
+
+      .benefits {
+        padding: 70px 0;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .benefit-card {
+        padding: 32px 24px;
+      }
+
+      .plan-section {
+        padding: 70px 0;
+      }
+
+      .plan-card-container {
+        padding: 36px 20px;
+        border-radius: 20px;
+      }
+
+      .plan-pricing-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+        padding: 24px 16px;
+      }
+
+      .plan-price-recurring {
+        padding-left: 0;
+      }
+
+      .plan-price-arrow {
+        transform: rotate(90deg);
+        margin: -6px 0;
+      }
+
+      .classes-section {
+        padding: 70px 0;
+      }
+
+      .classes-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .classes-weekly-summary {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+
+      .classes-weekly-summary .btn {
+        width: 100%;
+      }
+
+      .schedule-section {
+        padding: 70px 0;
+      }
+
+      .schedule-item {
+        padding: 14px 18px;
+      }
+
+      .schedule-day-name {
+        font-size: 0.88rem;
+      }
+
+      .schedule-time-value {
+        font-size: 1.05rem;
+      }
+
+      .schedule-highlight-banner {
+        font-size: 0.9rem;
+        padding: 14px 18px;
+      }
+
+      .btn-plan-cta {
+        font-size: 0.92rem;
+        padding: 16px 20px;
+      }
+
+      .experience {
+        padding: 60px 0 80px;
+      }
+
+      .experience-gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 12px;
+      }
+
+      .gallery-item {
+        height: 220px;
+      }
+
+      .gallery-item:first-child {
+        grid-row: auto;
+        height: 280px;
+      }
+
+      .cta-final {
+        padding: 80px 0;
+      }
+
+      .cta-final .section-title {
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+      }
+
+      .footer .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .btn {
+        padding: 16px 28px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       NAVBAR
+  ======================================== -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegação principal">
+    <div class="container">
+      <a href="#" class="navbar-brand" aria-label="AXÉ FIT — Página inicial">
+        <img src="assets/logo-axefit.png" alt="AXÉ FIT" />
+      </a>
+      <div class="navbar-links">
+        <a href="#beneficios">Diferenciais</a>
+        <a href="#plano">Plano Club+</a>
+        <a href="#aulas">Aulas Coletivas</a>
+        <a href="#experiencia">Estrutura</a>
+        <a href="#horarios">Horários</a>
+      </div>
+      <div class="navbar-cta">
+        <a href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20treinar%20na%20AX%C3%89%20FIT" class="btn btn-primary" id="cta-navbar">
+          QUERO TREINAR
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================
+       SECTION 1 — HERO
+  ======================================== -->
+  <section class="hero" id="hero" aria-label="Apresentação AXÉ FIT">
+    <div class="hero-bg">
+      <img
+        src="assets/hero-bg.png"
+        alt="Fachada interna da academia AXÉ FIT com logo dourado em parede de mármore escuro"
+        loading="eager"
+        fetchpriority="high"
+      >
+    </div>
+
+    <div class="container">
+      <div class="hero-content">
+        <h1>
+          Seu corpo.<br>
+          Sua força.<br>
+          <span class="accent">Seu ritmo.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Energia, estrutura e comunidade para você evoluir de verdade.
+          Na AXÉ FIT, cada treino é um passo na sua transformação.
+        </p>
+        <div class="hero-actions">
+          <a
+            href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20treinar%20na%20AX%C3%89%20FIT"
+            class="btn btn-primary"
+            id="cta-hero-primary"
+            aria-label="Entrar em contato pelo WhatsApp"
+          >
+            QUERO TREINAR NA AXÉ FIT
+          </a>
+          <a href="#plano" class="btn btn-secondary" id="cta-hero-secondary">
+            CONHECER PLANOS
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <span>Role</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 2 — POR QUE AXÉ FIT
+  ======================================== -->
+  <section class="benefits" id="beneficios" aria-label="Benefícios da AXÉ FIT">
+    <div class="container">
+      <div class="benefits-header reveal">
+        <p class="section-label">Por que AXÉ FIT?</p>
+        <h2 class="section-title">O que faz a diferença<br>no seu treino</h2>
+        <p class="section-subtitle">
+          Não é só sobre levantar peso. É sobre ter o ambiente certo, a energia certa e o acompanhamento certo para evoluir de verdade.
+        </p>
+      </div>
+
+      <div class="benefits-grid">
+        <!-- Card 1 -->
+        <div class="benefit-card reveal reveal-delay-1" id="benefit-treino">
+          <div class="benefit-icon" aria-hidden="true">🔥</div>
+          <h3>Treino de verdade</h3>
+          <p>Estrutura e ambiente preparados para você dar o próximo passo. Equipamentos de ponta e espaço pensado para performance.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="benefit-card reveal reveal-delay-2" id="benefit-energia">
+          <div class="benefit-icon" aria-hidden="true">⚡</div>
+          <h3>Energia que motiva</h3>
+          <p>Um ambiente que incentiva constância. A energia da AXÉ FIT faz você querer voltar todo dia.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="benefit-card reveal reveal-delay-3" id="benefit-resultados">
+          <div class="benefit-icon" aria-hidden="true">📈</div>
+          <h3>Resultados reais</h3>
+          <p>Treine com objetivo e acompanhe sua evolução. Aqui, cada série conta e cada progresso é celebrado.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="benefit-card reveal reveal-delay-4" id="benefit-comunidade">
+          <div class="benefit-icon" aria-hidden="true">🤝</div>
+          <h3>Comunidade forte</h3>
+          <p>Mais que uma academia — um lugar onde você se sente parte. Pessoas que treinam juntas evoluem juntas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION — PLANO AXÉ CLUB+
+  ======================================== -->
+  <section class="plan-section" id="plano" aria-label="Plano Anual Axé Club+">
+    <div class="container">
+      <div class="plan-card-container reveal">
+        <div class="plan-badge-pill">
+          PLANO ANUAL <span>AXÉ CLUB+</span>
+        </div>
+
+        <h2 class="plan-headline">
+          Treine o ano todo.<br>
+          <span class="yellow-text">Economize todo mês.</span>
+        </h2>
+
+        <div class="plan-divider" aria-hidden="true"></div>
+
+        <div class="plan-pricing-row">
+          <!-- 1ª Mensalidade -->
+          <div class="plan-price-initial">
+            <div class="plan-step-title"><span class="ordinal">1ª</span> MENSALIDADE</div>
+            <div class="plan-price-sublabel">Adesão facilitada</div>
+            <div class="plan-price-value-initial">
+              <small>R$</small>130<small>,00</small>
+            </div>
+          </div>
+
+          <!-- Seta indicativa -->
+          <div class="plan-price-arrow" aria-hidden="true">
+            ➔
+          </div>
+
+          <!-- A partir da 2ª -->
+          <div class="plan-price-recurring">
+            <div class="plan-step-title">A PARTIR DA 2ª</div>
+            <div class="plan-discount-tag">PAGUE ATÉ O DIA 5</div>
+            <div class="plan-discount-sub">R$ 30,00 DE DESCONTO</div>
+            <div class="plan-discount-label">Sua mensalidade fica</div>
+            <div class="plan-price-big">
+              <small>R$</small>100<small>,00</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inclusos no Plano -->
+        <div class="plan-features-bar">
+          <span>MUSCULAÇÃO</span>
+          <span class="bullet">•</span>
+          <span>AVALIAÇÃO</span>
+          <span class="bullet">•</span>
+          <span>AULAS COLETIVAS</span>
+        </div>
+
+        <!-- Sem taxa de matrícula -->
+        <div class="plan-no-fee">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="7" r="4"></circle>
+            <path d="M5.5 21a8.38 8.38 0 0 1 13 0"></path>
+          </svg>
+          <span>SEM TAXA DE MATRÍCULA</span>
+        </div>
+
+        <!-- CTA WhatsApp com número oficial -->
+        <a
+          href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20me%20matricular%20no%20Plano%20Anual%20Ax%C3%A9%20Club%2B"
+          class="btn-plan-cta"
+          id="cta-plano-club"
+        >
+          <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          <span>COMECE AGORA • (77) 99862-7660</span>
+        </a>
+
+        <p class="plan-disclaimer">
+          *Condição exclusiva do plano anual Axé Club+. Pagamentos no cartão podem ter taxa administrativa cobrada pela operadora.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION — AULAS COLETIVAS (Native 3-Card Grid)
+  ======================================== -->
+  <section class="classes-section" id="aulas" aria-label="Aulas Coletivas">
+    <div class="container">
+      <div class="classes-header reveal">
+        <p class="section-label">Modalidades Inclusas no Plano</p>
+        <h2 class="section-title">Aulas Coletivas</h2>
+        <p class="section-subtitle">
+          Diversidade e alta energia para acelerar seus resultados. Todas as modalidades inclusas no Plano Axé Club+ sem mensalidade extra.
+        </p>
+      </div>
+
+      <!-- 3 Modality Cards Grid -->
+      <div class="classes-cards-grid">
+        <!-- 1. MUAY THAI -->
+        <div class="modality-card reveal">
+          <div class="modality-card-media">
+            <span class="modality-tag">Combate & Cardio</span>
+            <img
+              src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&q=80&auto=format&fit=crop"
+              alt="Treino de Muay Thai na AXÉ FIT"
+              loading="lazy"
+            >
+          </div>
+          <div class="modality-card-body">
+            <h3 class="modality-card-title">Muay Thai</h3>
+            <p class="modality-card-desc">
+              Disciplina marcial, queima calórica intensa, agilidade e alívio do estresse com técnica e instrução especializada.
+            </p>
+
+            <div class="modality-schedule-box">
+              <div class="modality-schedule-label">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Horários Oficiais</span>
+              </div>
+              <div class="modality-schedule-item">
+                <span>05h30 • Terça</span>
+                <span class="period">Manhã</span>
+              </div>
+              <div class="modality-schedule-item">
+                <span>19h00 • Segunda e Quarta</span>
+                <span class="period">Noite</span>
+              </div>
+            </div>
+
+            <div class="modality-included-badge">
+              <span>✓ Incluso no Axé Club+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. G.A.P -->
+        <div class="modality-card reveal reveal-delay-1">
+          <div class="modality-card-media">
+            <span class="modality-tag">Definição & Core</span>
+            <img
+              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80&auto=format&fit=crop"
+              alt="Treino de G.A.P na AXÉ FIT"
+              loading="lazy"
+            >
+          </div>
+          <div class="modality-card-body">
+            <h3 class="modality-card-title">G.A.P</h3>
+            <p class="modality-card-desc">
+              Glúteos, Abdômen e Pernas. Foco em fortalecimento muscular localizado, postura, resistência e queima de gordura.
+            </p>
+
+            <div class="modality-schedule-box">
+              <div class="modality-schedule-label">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Horários Oficiais</span>
+              </div>
+              <div class="modality-schedule-item">
+                <span>05h20 • Sexta</span>
+                <span class="period">Manhã</span>
+              </div>
+              <div class="modality-schedule-item">
+                <span>18h00 • Terça e Quinta</span>
+                <span class="period">Noite</span>
+              </div>
+            </div>
+
+            <div class="modality-included-badge">
+              <span>✓ Incluso no Axé Club+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. DANÇA -->
+        <div class="modality-card reveal reveal-delay-2">
+          <div class="modality-card-media">
+            <span class="modality-tag">Ritmo & Energia</span>
+            <img
+              src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=600&q=80&auto=format&fit=crop"
+              alt="Aula de Dança na AXÉ FIT"
+              loading="lazy"
+            >
+          </div>
+          <div class="modality-card-body">
+            <h3 class="modality-card-title">Dança</h3>
+            <p class="modality-card-desc">
+              Vibração, coordenação motora e muita música. Treino aeróbico divertido para queimar centenas de calorias com alto astral.
+            </p>
+
+            <div class="modality-schedule-box">
+              <div class="modality-schedule-label">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Horários Oficiais</span>
+              </div>
+              <div class="modality-schedule-item">
+                <span>19h00 • Terça e Quinta</span>
+                <span class="period">Noite</span>
+              </div>
+            </div>
+
+            <div class="modality-included-badge">
+              <span>✓ Incluso no Axé Club+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumo da Grade Semanal -->
+      <div class="classes-weekly-summary reveal">
+        <div class="classes-summary-text">
+          <h4>Quer experimentar uma aula coletiva?</h4>
+          <p>Venha conhecer a energia da AXÉ FIT e faça uma aula experimental com nossos professores.</p>
+        </div>
+        <div class="classes-summary-cta">
+          <a
+            href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20coletiva%20na%20AX%C3%89%20FIT"
+            class="btn btn-primary"
+            id="cta-aulas-whatsapp"
+          >
+            AGENDAR AULA EXPERIMENTAL
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION — EXPERIÊNCIA AXÉ FIT
+  ======================================== -->
+  <section class="experience" id="experiencia" aria-label="Experiência AXÉ FIT">
+    <div class="container">
+      <div class="experience-wrapper">
+        <div class="experience-content reveal">
+          <p class="section-label">Experiência</p>
+          <h2 class="section-title">Mais que uma academia.<br>Um ambiente para evoluir.</h2>
+          <p>
+            Espaço pensado para quem leva o treino a sério. Equipamentos modernos, ambiente com energia única
+            e uma estrutura completa para você focar no que importa: sua evolução.
+          </p>
+          <a
+            href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20conhecer%20a%20AX%C3%89%20FIT"
+            class="btn btn-primary"
+            id="cta-experiencia"
+          >
+            AGENDAR VISITA
+          </a>
+        </div>
+
+        <div class="experience-gallery reveal reveal-delay-2">
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&auto=format&fit=crop"
+              alt="Aluno treinando com intensidade na AXÉ FIT"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=80&auto=format&fit=crop"
+              alt="Área de musculação com equipamentos modernos"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80&auto=format&fit=crop"
+              alt="Treino de força com foco e disciplina"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION — HORÁRIO DE FUNCIONAMENTO (Dashboard)
+  ======================================== -->
+  <section class="schedule-section" id="horarios" aria-label="Horário de Funcionamento">
+    <div class="container">
+      <div class="schedule-wrapper">
+        <!-- Lista de Horários -->
+        <div class="schedule-content reveal">
+          <div class="schedule-header">
+            <p class="section-label">Disponibilidade Total</p>
+            <h2 class="section-title">Horário de Funcionamento</h2>
+            <p class="section-subtitle">
+              Tempo para treinar todos os dias. Estrutura pronta para você encaixar o treino na sua rotina, do início da manhã até a noite.
+            </p>
+          </div>
+
+          <div class="schedule-list">
+            <!-- Segunda a Sexta -->
+            <div class="schedule-item">
+              <div class="schedule-day-wrap">
+                <div class="schedule-icon-circle" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <span class="schedule-day-name">Segunda a Sexta</span>
+                  <div style="font-size: 0.72rem; color: var(--color-text-muted); text-transform: uppercase; margin-top: 2px;">17 horas de academia aberta por dia</div>
+                </div>
+              </div>
+              <span class="schedule-time-value">05h às 22h</span>
+            </div>
+
+            <!-- Sábado -->
+            <div class="schedule-item">
+              <div class="schedule-day-wrap">
+                <div class="schedule-icon-circle" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <span class="schedule-day-name">Sábado</span>
+              </div>
+              <span class="schedule-time-value">06h às 14h</span>
+            </div>
+
+            <!-- Domingo -->
+            <div class="schedule-item">
+              <div class="schedule-day-wrap">
+                <div class="schedule-icon-circle" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <span class="schedule-day-name">Domingo</span>
+              </div>
+              <span class="schedule-time-value">08h às 12h</span>
+            </div>
+
+            <!-- Feriados -->
+            <div class="schedule-item">
+              <div class="schedule-day-wrap">
+                <div class="schedule-icon-circle" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <span class="schedule-day-name">Feriados</span>
+              </div>
+              <span class="schedule-time-value">08h às 13h</span>
+            </div>
+
+            <!-- Destaque: Aberta 7 dias por semana -->
+            <div class="schedule-highlight-banner">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M9 16l2 2 4-4"></path>
+              </svg>
+              <span>Aberta 7 dias por semana • Sem desculpas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card de Estrutura e Atendimento (Foto Real) -->
+        <div class="schedule-facility-card reveal reveal-delay-2">
+          <div class="schedule-facility-img">
+            <img
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80&auto=format&fit=crop"
+              alt="Estrutura de musculação e treinamento da AXÉ FIT"
+              loading="lazy"
+            >
+          </div>
+          <div class="schedule-facility-content">
+            <h3 class="schedule-facility-title">Estrutura Completa</h3>
+            <ul class="schedule-facility-points">
+              <li>
+                <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Equipamentos biomecânicos de alta performance</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Ambiente climatizado, espaçoso e motivador</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Instrutores qualificados durante todo o horário</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Aulas de Muay Thai, G.A.P e Dança inclusas</span>
+              </li>
+            </ul>
+
+            <a
+              href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20agendar%20uma%20visita%20na%20AX%C3%89%20FIT"
+              class="btn btn-primary"
+              style="width: 100%; text-align: center; justify-content: center;"
+              id="cta-facility-visit"
+            >
+              FALE COM NOSSA EQUIPE
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION — CTA FINAL
+  ======================================== -->
+  <section class="cta-final" id="comece" aria-label="Comece a treinar">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Comece agora</p>
+        <h2 class="section-title">Pronto para<br>a sua transformação?</h2>
+        <div class="cta-final-divider" aria-hidden="true"></div>
+        <p>
+          O primeiro passo é o mais importante. Venha conhecer a AXÉ FIT e descubra
+          por que quem treina aqui não quer treinar em outro lugar.
+        </p>
+        <a
+          href="https://wa.me/5577998627660?text=Ol%C3%A1!%20Quero%20treinar%20na%20AX%C3%89%20FIT"
+          class="btn btn-primary"
+          id="cta-final-btn"
+        >
+          QUERO TREINAR NA AXÉ FIT
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FOOTER
+  ======================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-brand">
+        <img src="assets/logo-axefit.png" alt="AXÉ FIT" />
+      </div>
+      <p class="footer-copy">© 2026 AXÉ FIT. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT — Scroll Animations & Navbar
+  ======================================== -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+
+    function handleNavbarScroll() {
+      const scrollY = window.scrollY;
+      if (scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      lastScroll = scrollY;
+    }
+
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+
+    // Intersection Observer for reveal animations
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
